@@ -128,12 +128,12 @@ If you plan to use Nightscout, we recommend using [Heroku](http://www.nightscout
 
 - Android 4
 - Chrome 68
-- Edge 15
+- Edge 17
 - Firefox 61
-- Internet Explorer: not supported, ie8 is known not to work
-- iOS 9 
-- Safari 11
-- Opera: 54
+- Internet Explorer: not supported
+- iOS 11
+- Opera 54
+- Safari 10 (macOS 10.12)
 
 ## Windows installation software requirements:
 
@@ -148,8 +148,7 @@ $ npm install
 
 ## Installation notes for users with nginx or Apache reverse proxy for SSL/TLS offloading:
 
-- Set `INSECURE_USE_HTTP` to `false`, to be able to use non secure HTTP connections to Nightscout server
-- Your site redirects insecure connections to `https` by default. If you don't want that and use a Nginx or Apache proxy, set `INSECURE_USE_HTTP` to `true`. This will allow (unsafe) http traffic.
+- Your site redirects insecure connections to `https` by default. If you use a reverse proxy like nginx or Apache to handle the connection security for you, make sure it sets the `X-Forwarded-Proto` header. Otherwise nightscout will be unable to know if it was called through a secure connection and will try to redirect you to the https version. If you're unable to set this Header, you can change the `INSECURE_USE_HTTP` setting in nightscout to true in order to allow insecure connections without being redirected.
 - In case you use a proxy. Do not use an external network interfaces for hosting Nightscout. Make sure the unsecure port is not available from a remote network connection
 - HTTP Strict Transport Security (HSTS) headers are enabled by default, use settings `SECURE_HSTS_HEADER` and `SECURE_HSTS_HEADER_*`
 - See [Predefined values for your server settings](#predefined-values-for-your-server-settings-optional) for more details
@@ -158,7 +157,7 @@ $ npm install
 
 - If deploying the software to Microsoft Azure, you must set ** in the app settings for *WEBSITE_NODE_DEFAULT_VERSION* and *SCM_COMMAND_IDLE_TIMEOUT* **before** you deploy the latest Nightscout or the site deployment will likely fail. Other hosting environments do not require this setting. Please use:
 ```
-WEBSITE_NODE_DEFAULT_VERSION=10.14.1
+WEBSITE_NODE_DEFAULT_VERSION=10.15.2
 SCM_COMMAND_IDLE_TIMEOUT=300
 ```
 - See [install MongoDB, Node.js, and Nightscouton a single Windows system](https://github.com/jaylagorio/Nightscout-on-Windows-Server). if you want to host your Nightscout outside of the cloud. Although the instructions are intended for Windows Server the procedure is compatible with client versions of Windows such as Windows 7 and Windows 10.
